@@ -50,9 +50,13 @@ function arrayreturn() {
     let arr = [];
     let s = +prompt('Введите начало диапазона целочисленного массива (целое число)', '10');
     let e = +prompt('Введите конец диапазона целочисленного массива (целое число)', '30');
+    if (isFinite(s) == true && isFinite(e) == true) {
     for (let i = s; i <= e; i++) {
         arr.push(i);
     }    
+    } else {
+        return 'Инвалид аргумент';
+    }  
     return arr
 }
 function arraywrite() {
@@ -67,6 +71,8 @@ document.write(`<p>` + '5)' + `&emsp;`);
 function isEven(a) {
     if (a % 2 == 0) {
         return true;
+    } else if (isFinite(a) !== true || a == undefined) {
+        return 'это было не число';
     } else {
         return false;
     }
@@ -83,7 +89,7 @@ function evenarray() {
     let i = 0;
     while(true) {
         arr.push (prompt('Вводите целые числа, пока не надоест. Затем оставьте поле пустым', 22));
-        if (!(arr[i]).trim()) {
+        if ((arr[i]).trim() == '') {
             arr.pop();
             break;
         }
@@ -112,23 +118,30 @@ function pyramidka(strnum, symb) {
     if (+strnum == NaN) {
         return;
     }
-    for(let i = 1; i < strnum; i++) {
+    for(let i = 1; i <= strnum; i++) {
       let str = '';
       for(let j = 0; j < i; j++) {
-        str += symb == undefined || symb.trim() == '' ? i : symb;
+        if (symb == undefined || symb.trim() !== '') {
+            str += symb;
+        } else if (symb.trim() == '') {
+            str += i;
+        }
       }
       console.log(str + '\n');
     }
 }
-pyramidka(prompt('Введите число строк, из которых будет построена пирамидка', '9'),
+pyramidka(prompt('Введите число строк, из которых будет построена пирамидка (2 - 9)', '9'),
 prompt('Введите символ, если хотите'));
 document.write(`</p>` + `<br>` + `<hr>`);
 
 
 document.write(`<p>` + '8)' + `&emsp;` + 'Равнобедренный треугольник из звездочек + перевёрнутый:' + `<br>`);
 function trezv() {
-    let nstr = +prompt('Введите количество рядов треугольника' 
+    let nstr = +prompt('Введите количество рядов треугольника ' +
     + '(до 45, чтобы не появилось горизонтальной прокрутки)', '15');
+    if (isFinite(nstr) !== true) {
+        return document.write(`<p class="res">` + 'Вы ввели не число и треугольник не получится!' + `</p>`);
+    }
     let str = '*';
     document.write(str + `<br>`);
     for (let i = 1; i < nstr; i++) {
@@ -155,7 +168,11 @@ function fibo() {
     let farr2nd = 1;
     farr.push(farr1st, farr2nd);
     for (let i = 2; i <= 1000; i++) {
-            farr.push(farr[i - 1] + farr[i - 2]);
+        farr.push(farr[i - 1] + farr[i - 2]);
+        if ((farr[i - 1] + farr[i - 2]) >= 1000) { 
+            farr.pop();
+            break;
+        }   //Не совсем понял, надо 1000 чисел Фибоначи или все числа Фибоначи до 1000?
     }
     return farr;
 }
@@ -178,9 +195,8 @@ function sumtill1(num) {
         return sum;
     }
 }
-let num = 228;
 document.write('Результат работы функции "sumtill1" (Складывание цифр пока сумма сама не станет одной цифрой):' 
-+ `<p class="res">` + sumtill1(num) + `</p>` + `<br>`);
++ `<p class="res">` + sumtill1(228) + `</p>` + `<br>`);
 document.write(`</p>` + `<br>` + `<hr>`);
 
 
@@ -247,5 +263,157 @@ document.write(`</p>` + `<br>` + `<hr>`);
 
 
 document.write(`<p>` + '13)' + `&emsp;`);
-document.write('Пока не осилил');
+function emailchek() {
+    let email = prompt('Введите email для проверки', 'vasiok@gmail.com');
+    let marr = String(email).split('');
+    let ename = [];
+    let edom = [];
+    let mlength = marr.length;
+    let wrong = 'Email неверный';
+    let pass = 'Email верный';
+    for (let j = 0; j < mlength; j++) {
+        ename.push(marr[j]);
+        if (marr[j] == '@') {
+            ename.pop();
+            break;
+        }
+    }
+    for (let k = mlength; k >= 0; k--) {
+        edom.push(marr[k]);
+        if (marr[k] == '.') {
+            edom.pop();
+            break;
+        }
+    }
+    for (let i = 0; i < mlength; i++) {
+        if (marr[i] == 'a' ||
+        marr[i] == 'a' ||
+        marr[i] == 'А' ||
+        marr[i] == 'б' ||
+        marr[i] == 'Б' ||
+        marr[i] == 'в' ||
+        marr[i] == 'В' ||
+        marr[i] == 'г' ||
+        marr[i] == 'Г' ||
+        marr[i] == 'д' ||
+        marr[i] == 'Д' ||
+        marr[i] == 'е' ||
+        marr[i] == 'Е' ||
+        marr[i] == 'ё' ||
+        marr[i] == 'Ё' ||
+        marr[i] == 'ж' ||
+        marr[i] == 'Ж' ||
+        marr[i] == 'з' ||
+        marr[i] == 'З' ||
+        marr[i] == 'и' ||
+        marr[i] == 'И' ||
+        marr[i] == 'к' ||
+        marr[i] == 'К' ||
+        marr[i] == 'л' ||
+        marr[i] == 'Л' ||
+        marr[i] == 'м' ||
+        marr[i] == 'М' ||
+        marr[i] == 'н' ||
+        marr[i] == 'Н' ||
+        marr[i] == 'о' ||
+        marr[i] == 'О' ||
+        marr[i] == 'п' ||
+        marr[i] == 'П' ||
+        marr[i] == 'р' ||
+        marr[i] == 'Р' ||
+        marr[i] == 'с' ||
+        marr[i] == 'С' ||
+        marr[i] == 'т' ||
+        marr[i] == 'Т' ||
+        marr[i] == 'у' ||
+        marr[i] == 'У' ||
+        marr[i] == 'ф' ||
+        marr[i] == 'Ф' ||
+        marr[i] == 'х' ||
+        marr[i] == 'Х' ||
+        marr[i] == 'ц' ||
+        marr[i] == 'Ц' ||
+        marr[i] == 'ч' ||
+        marr[i] == 'Ч' ||
+        marr[i] == 'ш' ||
+        marr[i] == 'Ш' ||
+        marr[i] == 'щ' ||
+        marr[i] == 'Щ' ||
+        marr[i] == 'ъ' ||
+        marr[i] == 'Ъ' ||
+        marr[i] == 'ы' ||
+        marr[i] == 'Ы' ||
+        marr[i] == 'ь' ||
+        marr[i] == 'Ь' ||
+        marr[i] == 'э' ||
+        marr[i] == 'Э' ||
+        marr[i] == 'ю' ||
+        marr[i] == 'Ю' ||
+        marr[i] == 'я' ||
+        marr[i] == 'Я' ||
+        marr[i] == '`' ||
+        marr[i] == '~' ||
+        marr[i] == '"' ||
+        marr[i] == '#' ||
+        marr[i] == '№' ||
+        marr[i] == '$' ||
+        marr[i] == '%' ||
+        marr[i] == '^' ||
+        marr[i] == '&' ||
+        marr[i] == '*' ||
+        marr[i] == '(' ||
+        marr[i] == ')' ||
+        marr[i] == '+' ||
+        marr[i] == '=' ||
+        marr[i] == '{' ||
+        marr[i] == '}' ||
+        marr[i] == ':' ||
+        marr[i] == ';' ||
+        marr[i] == "'" ||
+        marr[i] == '"' ||
+        marr[i] == '<' ||
+        marr[i] == ',' ||
+        marr[i] == '>' ||
+        marr[i] == '?' ||
+        marr[i] == '/' ||
+        marr[i] == '\\' ||
+        marr[i] == '|' ||
+        marr[0] == '@' ||
+        marr[0] == '_' ||
+        marr[0] == '-' ||
+        marr[0] == '.' ||
+        marr[mlength - 1] == '@' ||
+        marr[mlength - 1] == '_' ||
+        marr[mlength - 1] == '-' ||
+        marr[mlength - 1] == '.' ||
+        marr[i] + marr[i + 1] == '@@' ||
+        marr[i] + marr[i + 1] == '@_' ||
+        marr[i] + marr[i + 1] == '@-' ||
+        marr[i] + marr[i + 1] == '@.' ||
+        marr[i] + marr[i + 1] == '_@' ||
+        marr[i] + marr[i + 1] == '__' ||
+        marr[i] + marr[i + 1] == '_-' ||
+        marr[i] + marr[i + 1] == '_.' ||
+        marr[i] + marr[i + 1] == '-@' ||
+        marr[i] + marr[i + 1] == '-_' ||
+        marr[i] + marr[i + 1] == '--' ||
+        marr[i] + marr[i + 1] == '-.' ||
+        marr[i] + marr[i + 1] == '.@' ||
+        marr[i] + marr[i + 1] == '._' ||
+        marr[i] + marr[i + 1] == '.-' ||
+        marr[i] + marr[i + 1] == '..' ||
+        marr[1] == '@' ||
+        marr[2] == '@' ||
+        Number(marr[0]) == true) {
+            return wrong;
+        }
+        else {
+            return pass;
+        }
+    }
+    if (Number(ename) == true || edom.length < 2 || edom.length > 11) {
+        return wrong;
+    }
+}
+document.write(emailchek() + '  *функция пока работает криво(');
 document.write(`</p>` + `<br>` + `<hr>`);
